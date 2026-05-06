@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Acosys V8 — About</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #08090c;
+      --surface: #0f1117;
+      --border: rgba(255,255,255,0.07);
+      --accent: #d4ff57;
+      --accent2: #57c8ff;
+      --text: #e8eaf0;
+      --muted: #6b7280;
+      --card: #111318;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 2.5rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(8,9,12,0.85);
+      backdrop-filter: blur(18px);
+      z-index: 100;
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.15rem;
+      letter-spacing: -0.02em;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      letter-spacing: 0.04em;
+      transition: color .2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+    .nav-links a.active { position: relative; }
+    .nav-links a.active::after {
+      content: '';
+      position: absolute; bottom: -4px; left: 0; right: 0;
+      height: 1.5px;
+      background: var(--accent);
+    }
+    .nav-cta {
+      background: var(--accent);
+      color: #08090c;
+      border: none;
+      padding: .55rem 1.25rem;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-decoration: none;
+      clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+      transition: opacity .2s;
+    }
+    .nav-cta:hover { opacity: .85; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      position: relative;
+      padding: 8rem 2.5rem 4rem;
+      text-align: center;
+      overflow: hidden;
+    }
+    .hero-glow {
+      position: absolute;
+      width: 700px; height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(212,255,87,0.08) 0%, transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -55%);
+      pointer-events: none;
+      animation: pulse 6s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: translate(-50%, -55%) scale(1); opacity: 1; }
+      50% { transform: translate(-50%, -55%) scale(1.08); opacity: 0.7; }
+    }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: .5rem;
+      border: 1px solid var(--border);
+      padding: .35rem .9rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 2rem;
+      animation: fadeUp .8s ease both;
+    }
+    .hero-tag .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent);
+      animation: blink 2s ease infinite;
+    }
+    @keyframes blink { 0%,100% { opacity:1 } 50% { opacity:.3 } }
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: -0.04em;
+      animation: fadeUp .8s .15s ease both;
+    }
+    h1 em {
+      font-style: normal;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255,255,255,0.25);
+    }
+    .hero-sub {
+      max-width: 520px;
+      margin: 1.75rem auto 0;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      animation: fadeUp .8s .3s ease both;
+    }
+    .hero-actions {
+      display: flex; gap: 1rem; justify-content: center;
+      margin-top: 2.5rem;
+      animation: fadeUp .8s .45s ease both;
+    }
+    .btn-primary {
+      background: var(--accent); color: #08090c;
+      padding: .75rem 2rem;
+      font-family: 'Syne', sans-serif; font-weight: 700;
+      font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase;
+      text-decoration: none; border: none; cursor: pointer;
+      clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
+      transition: opacity .2s, transform .2s;
+    }
+    .btn-primary:hover { opacity: .85; transform: translateY(-1px); }
+    .btn-ghost {
+      background: transparent; color: var(--text);
+      padding: .75rem 2rem;
+      border: 1px solid var(--border);
+      font-family: 'Syne', sans-serif; font-weight: 600;
+      font-size: 0.85rem; letter-spacing: 0.04em;
+      text-decoration: none; cursor: pointer;
+      transition: border-color .2s, transform .2s;
+    }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.2); transform: translateY(-1px); }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── STATS STRIP ── */
+    .stats-strip {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      text-align: center;
+    }
+    .stat-item {
+      padding: 2.5rem 1rem;
+      border-right: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-item::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transition: transform .4s ease;
+      transform-origin: left;
+    }
+    .stat-item:hover::before { transform: scaleX(1); }
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.5rem; font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--accent);
+      display: block;
+    }
+    .stat-label {
+      font-size: 0.8rem; color: var(--muted);
+      letter-spacing: 0.06em; text-transform: uppercase;
+      margin-top: .25rem;
+    }
+
+    /* ── SECTION ── */
+    section { padding: 7rem 2.5rem; max-width: 1200px; margin: 0 auto; }
+    .section-eyebrow {
+      font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 1rem;
+    }
+    h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+    }
+    h2 span { color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.2); }
+    .section-desc {
+      max-width: 480px;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.75;
+      margin-top: 1rem;
+    }
+
+    /* ── FEATURE GRID ── */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-top: 4rem;
+    }
+    .feature-card {
+      background: var(--card);
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: background .3s;
+    }
+    .feature-card:hover { background: #141720; }
+    .feature-card::after {
+      content: '';
+      position: absolute; bottom: 0; left: 2.5rem; right: 2.5rem;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0; transition: opacity .3s;
+    }
+    .feature-card:hover::after { opacity: 1; }
+    .fc-icon {
+      width: 44px; height: 44px;
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.25rem;
+      margin-bottom: 1.5rem;
+      clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%);
+    }
+    .fc-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.05rem; font-weight: 700;
+      margin-bottom: .6rem;
+    }
+    .fc-desc { font-size: 0.875rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── ABOUT SPLIT ── */
+    .about-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+    .about-visual {
+      position: relative;
+      aspect-ratio: 4/3;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      background: var(--surface);
+    }
+    .about-visual .corner {
+      position: absolute;
+      width: 20px; height: 20px;
+      border-color: var(--accent);
+      border-style: solid;
+    }
+    .corner.tl { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+    .corner.tr { top: -1px; right: -1px; border-width: 2px 2px 0 0; }
+    .corner.bl { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; }
+    .corner.br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+    .about-visual-inner {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 1rem;
+    }
+    .av-ring {
+      width: 100px; height: 100px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+      animation: spin 12s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .av-ring::before {
+      content: '';
+      position: absolute;
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      top: -4px; left: 50%; transform: translateX(-50%);
+    }
+    .av-ring-inner {
+      width: 70px; height: 70px;
+      border-radius: 50%;
+      border: 1px solid rgba(212,255,87,0.3);
+      animation: spin 6s linear infinite reverse;
+    }
+    .av-label {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--muted);
+    }
+    .grid-lines {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    .list-checks { list-style: none; margin-top: 2rem; display: flex; flex-direction: column; gap: 1rem; }
+    .list-checks li {
+      display: flex; gap: .75rem; align-items: flex-start;
+      font-size: 0.9rem; color: var(--muted);
+    }
+    .list-checks li::before {
+      content: '✓';
+      color: var(--accent);
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: .05rem;
+    }
+
+    /* ── TEAM ── */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-top: 4rem;
+    }
+    .team-card {
+      border: 1px solid var(--border);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      background: var(--card);
+      position: relative;
+      overflow: hidden;
+      transition: transform .3s, border-color .3s;
+    }
+    .team-card:hover { transform: translateY(-4px); border-color: rgba(212,255,87,0.2); }
+    .team-avatar {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 2px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.25rem;
+      font-size: 1.5rem;
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      color: var(--accent);
+    }
+    .team-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; }
+    .team-role { font-size: 0.775rem; color: var(--muted); margin-top: .3rem; letter-spacing: 0.04em; }
+
+    /* ── CTA BANNER ── */
+    .cta-banner {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 6rem 2.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-banner::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 100%, rgba(212,255,87,0.05) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .cta-banner h2 { margin: 0 auto 1rem; max-width: 600px; }
+    .cta-banner p { color: var(--muted); max-width: 440px; margin: 0 auto 2.5rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 2.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-logo {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: 0.9rem;
+    }
+    .footer-logo span { color: var(--accent); }
+    footer p { font-size: 0.8rem; color: var(--muted); }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-size: 0.8rem; color: var(--muted); text-decoration: none; transition: color .2s; }
+    .footer-links a:hover { color: var(--text); }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(32px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-links { display: none; }
+      section { padding: 4rem 1.25rem; }
+      .stats-strip { grid-template-columns: repeat(2, 1fr); }
+      .stat-item:nth-child(2) { border-right: none; }
+      .stat-item:nth-child(3) { border-top: 1px solid var(--border); }
+      .feature-grid { grid-template-columns: 1fr; }
+      .about-split { grid-template-columns: 1fr; gap: 3rem; }
+      .team-grid { grid-template-columns: repeat(2, 1fr); }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">ACOSY<span>S</span></div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="#">Services</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+    <a href="#" class="nav-cta">Get Started</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-glow"></div>
+    <div>
+      <div class="hero-tag"><span class="dot"></span> Tentang Kami</div>
+      <h1>Kami Membangun<br/><em>Masa Depan</em><br/>Digital</h1>
+      <p class="hero-sub">Acosys V8 adalah platform enterprise generasi berikutnya — dirancang untuk kecepatan, skalabilitas, dan pengalaman yang tak tertandingi.</p>
+      <div class="hero-actions">
+        <a href="index.html" class="btn-primary">← Kembali ke Home</a>
+        <a href="#about" class="btn-ghost">Pelajari Lebih Lanjut</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS STRIP -->
+  <div class="stats-strip reveal">
+    <div class="stat-item">
+      <span class="stat-num">8+</span>
+      <span class="stat-label">Tahun Pengalaman</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">500+</span>
+      <span class="stat-label">Klien Aktif</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">99.9%</span>
+      <span class="stat-label">Uptime Jaminan</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">24/7</span>
+      <span class="stat-label">Support Tim</span>
+    </div>
+  </div>
+
+  <!-- ABOUT SPLIT -->
+  <section id="about" class="reveal">
+    <div class="about-split">
+      <div class="about-visual">
+        <div class="grid-lines"></div>
+        <div class="corner tl"></div>
+        <div class="corner tr"></div>
+        <div class="corner bl"></div>
+        <div class="corner br"></div>
+        <div class="about-visual-inner">
+          <div class="av-ring">
+            <div class="av-ring-inner"></div>
+          </div>
+          <div class="av-label">Acosys Engine V8</div>
+        </div>
+      </div>
+      <div>
+        <p class="section-eyebrow">Siapa Kami</p>
+        <h2>Dibangun oleh<br/><span>Engineer,</span><br/>untuk Bisnis</h2>
+        <p class="section-desc">Kami adalah tim yang obsesif terhadap performa dan detail. Setiap fitur yang kami bangun melewati standar ketat sebelum sampai ke tangan Anda.</p>
+        <ul class="list-checks">
+          <li>Arsitektur microservices yang telah terbukti di skala enterprise</li>
+          <li>Enkripsi end-to-end dengan standar keamanan terkini</li>
+          <li>Integrasi API terbuka — hubungkan dengan ekosistem Anda</li>
+          <li>Dashboard analitik real-time dengan insight mendalam</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="reveal" style="padding-top:0;">
+    <p class="section-eyebrow">Keunggulan Platform</p>
+    <h2>Kenapa Memilih<br/>Acosys <span>V8</span>?</h2>
+    <p class="section-desc">Setiap aspek dirancang dengan satu tujuan — memberikan hasil terbaik untuk bisnis Anda.</p>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="fc-icon">⚡</div>
+        <div class="fc-title">Kecepatan Luar Biasa</div>
+        <div class="fc-desc">Engine V8 kami dioptimalkan untuk latensi ultra-rendah. Response time di bawah 50ms bahkan di beban puncak.</div>
+      </div>
+      <div class="feature-card">
+        <div class="fc-icon">🛡</div>
+        <div class="fc-title">Keamanan Enterprise</div>
+        <div class="fc-desc">Enkripsi AES-256, autentikasi multi-faktor, dan audit log lengkap untuk kepatuhan regulasi.</div>
+      </div>
+      <div class="feature-card">
+        <div class="fc-icon">📈</div>
+        <div class="fc-title">Skalabilitas Tanpa Batas</div>
+        <div class="fc-desc">Infrastruktur cloud-native yang otomatis menyesuaikan kapasitas sesuai kebutuhan bisnis Anda.</div>
+      </div>
+      <div class="feature-card">
+        <div class="fc-icon">🔗</div>
+        <div class="fc-title">Integrasi Mudah</div>
+        <div class="fc-desc">REST API + Webhook yang terdokumentasi lengkap. Terhubung dalam hitungan jam, bukan minggu.</div>
+      </div>
+      <div class="feature-card">
+        <div class="fc-icon">🎨</div>
+        <div class="fc-title">UI yang Intuitif</div>
+        <div class="fc-desc">Interface yang dirancang dengan prinsip UX modern. Tim Anda produktif sejak hari pertama.</div>
+      </div>
+      <div class="feature-card">
+        <div class="fc-icon">📊</div>
+        <div class="fc-title">Analitik Mendalam</div>
+        <div class="fc-desc">Dashboard real-time dengan visualisasi data yang powerful untuk keputusan berbasis data.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section class="reveal" style="padding-top:0;">
+    <p class="section-eyebrow">Tim Kami</p>
+    <h2>Orang-Orang di<br/><span>Balik</span> Platform</h2>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar">A</div>
+        <div class="team-name">Ahmad R.</div>
+        <div class="team-role">CEO & Co-Founder</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">S</div>
+        <div class="team-name">Sari W.</div>
+        <div class="team-role">CTO & Architect</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">D</div>
+        <div class="team-name">Dimas P.</div>
+        <div class="team-role">Lead Engineer</div>
+      </div
